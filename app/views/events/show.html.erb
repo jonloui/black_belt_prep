@@ -1,0 +1,58 @@
+<div id="header_links">
+	<%= link_to 'Events Dashboard', "/events/index" %>
+	<%= link_to 'Logout', "/signout" %>
+</div>
+
+<div id="show_event_info_container">
+	<% @event.each do |event| %>
+	<h1><%= event.name %></h1>
+	<ul id="show_event_info_list">
+		<li>Host: <%= event.first_name %> <%= event.last_name %></li>
+		<li>Date: <%= event.date %></li>
+		<li>Location: <%= event.location %>, <%= event.state %></li>
+		<li>People who are joining the event: <%= @total_people.to_s %></li>
+	</ul>
+	<% end %>
+
+	<table id="show_event_table">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Location</th>
+				<th>State</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @attendees.each do |attendee| %>
+				<tr>
+					<td><%= attendee.first_name %> <%= attendee.last_name %></td>
+					<td><%= attendee.location %></td>
+					<td><%= attendee.state %></td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+</div>
+
+<div id="show_event_comments_container">
+	<h2>Discussion about this event:</h2>
+	<div id="show_comments">
+		<% @comments.each do |comment| %>
+			<p><%= comment.first_name %> says: <%= comment.text %></p>
+		<% end %>
+	</div>
+
+	<div class="errors">
+	    <% if flash[:comment_error] %>
+	      <% flash[:comment_error].each do |error| %>
+	        <p><%= error %></p>
+	      <% end %>
+	    <% end %>
+	</div>
+	<h3>Add Comment:</h3>
+	<%= simple_form_for(:comment, :url => comments_path) do |f| %>
+	  <%= f.hidden_field :event_id, value: @event[0][:id] %>
+	  <%= f.input :text, label: false, required: false, as: :text, input_html: { rows: '5', cols: '50' } %>
+	  <%= f.button :submit, value: "Submit Comments", id: "show_comment_button" %>
+	<% end %>
+</div>

@@ -1,0 +1,36 @@
+<h1 id="title">Welcome!</h1>
+
+<div id="register">
+  <h2>Register</h2>
+  <div class="errors">
+    <% if flash[:registration_errors] %>
+      <% flash[:registration_errors].each do |error| %>
+        <p><%= error %></p>
+      <% end %>
+    <% end %>
+  </div>
+
+  <%= simple_form_for @user, defaults: { required: false } do |f| %>
+  <%= f.input :first_name, label: "First Name" %>
+  <%= f.input :last_name, label: "Last Name" %>
+  <%= f.input :email, label: "Email" %>
+  <%= f.input :location, label: "Location" %>
+  <%= f.input :state, label: false, collection: us_states, include_blank: false %>
+  <%= f.input :password, label: "Password" %>
+  <%= f.input :password_confirmation, label: "Confirm Password" %>
+  <%= f.button :submit, value: "Register" %>
+  <% end %>
+</div>
+
+<div id="login">
+  <h2>Login</h2>
+  <div class="errors">
+    <p><%= flash[:session_errors] %></p>
+  </div>
+
+  <%= simple_form_for(:session, :url => sessions_path) do |f| %>
+  <%= f.input :email, label: "Email", required: false %>
+  <%= f.input :password, label: "Password", required: false %>
+  <%= f.button :submit, value: "Log In" %>
+  <% end %>
+</div>

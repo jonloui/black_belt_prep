@@ -1,0 +1,25 @@
+<div id="header_links">
+  <%= link_to 'Events Dashboard', "/events/index" %> |
+  <%= link_to 'Logout', "/signout" %>
+</div>
+
+<h1>Edit Your Event</h1>
+
+<div id="edit">
+  <div class="errors">
+    <% if flash[:edit_errors] %>
+      <% flash[:edit_errors].each do |error| %>
+        <p><%= error %></p>
+      <% end %>
+    <% end %>
+  </div>
+
+  <%= simple_form_for @event, defaults: { required: false } do |f| %>
+  <%= f.hidden_field :_method, input_html: { value: 'patch' } %>
+  <%= f.input :name, label: "First Name" %>
+  <%= f.input :date, label: "Date" %>
+  <%= f.input :location, label: "Location" %>
+  <%= f.input :state, label: false, collection: us_states, include_blank: false %>
+  <%= f.button :submit, value: "Update Event", id: "update_event_button" %>
+  <% end %>
+</div>

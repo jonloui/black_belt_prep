@@ -1,0 +1,101 @@
+<div id="header_links">
+	<a href="/users/<%= @user.id %>/edit">Edit My Profile</a>
+	<a href= "/sessions/<%= @user.id %>" data-method='delete'>Logout</a>
+</div>
+
+<h3>Welcome <%= @user.first_name %>!</h3>
+
+<p>Here are some of the events in your state:</p>
+
+<table class="index_event_table">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Date</th>
+			<th>Location</th>
+			<th>Host</th>
+			<th>Action Status</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @events.each do |event| %>
+		<!-- This is where I used the date validate method from the validates_timeliness gem -->
+			<% if event.state == @user.state && !Date.parse(event.date.to_s).past? %>
+			<tr>
+				<td><%= link_to event.name, '/events/'+event.id.to_s %></td>
+				<td><%= event.date %></td>
+				<td><%= event.location %></td>
+				<td><%= event.first_name %> <%= event.last_name %></td>
+				<td>
+					<% if event.user_id == @user.id %>
+						<%= link_to 'Edit', '/events/'+event.id.to_s+"/edit" %>
+						<%= link_to 'Delete', '/events/'+event.id.to_s, method: :delete %>
+					<% elsif !@events_attending.where(event_id: event.id).present? %>
+						<%= link_to 'Join', '/attendances/'+event.id.to_s, method: :post %>
+					<% else %>
+						Joining
+						<%= link_to 'Cancel', '/attendances/'+event.id.to_s, method: :delete %>
+					<% end %>
+				</td>
+			</tr>
+			<% end %>
+		<% end %>
+	</tbody>
+</table>
+
+<p>Here are some of the events in other states:</p>
+<table class="index_event_table">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Date</th>
+			<th>Location</th>
+			<th>State</th>
+			<th>Host</th>
+			<th>Action Status</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @events.each do |event| %>
+			<% if event.state != @user.state && !Date.parse(event.date.to_s).past? %>
+			<tr>
+				<td><%= link_to event.name, '/events/'+event.id.to_s %></td>
+				<td><%= event.date.strftime("%B %d %Y") %></td>
+				<td><%= event.location %></td>
+				<td><%= event.state %></td>
+				<td><%= event.first_name %> <%= event.last_name %></td>
+				<td>
+					<% if event.user_id == @user.id %>
+						<%= link_to 'Edit', '/events/'+event.id.to_s+"/edit" %>
+						<%= link_to 'Delete', '/events/'+event.id.to_s, method: :delete %>
+					<% elsif !@events_attending.where(event_id: event.id).present? %>
+						<%= link_to 'Join', '/attendances/'+event.id.to_s, method: :post %>
+					<% else %>
+						Joining
+						<%= link_to 'Cancel', '/attendances/'+event.id.to_s, method: :delete %>
+					<% end %>
+				</td>
+			</tr>
+			<% end %>
+		<% end %>
+	</tbody>
+</table>
+
+<div class="errors">
+    <% if flash[:edit_errors] %>
+      <% flash[:edit_errors].each do |error| %>
+        <p><%= error %></p>
+      <% end %>
+    <% end %>
+</div>
+
+<div id="add_event_container">
+	<h3>Add Event</h3>
+	<%= simple_form_for @new_event, defaults: { required: false } do |f| %>
+	  <%= f.input :name, label: "Name" %>
+	  <%= f.input :date, label: "Date" %>
+	  <%= f.input :location, label: "Location" %>
+	  <%= f.input :state, label: false, collection: us_states, include_blank: false, priority: ["#{@user.state}"] %>
+	  <%= f.button :submit, value: "Add Event", id: "index_add_button" %>
+	<% end %>
+</div>

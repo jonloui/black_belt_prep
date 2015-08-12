@@ -1,0 +1,84 @@
+// Place all the styles related to the Events controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#header_links
+{
+	margin-left: 750px;
+	width: 200px;
+}
+
+.index_event_table a, .index_event_table a:visited
+{
+	color: blue;
+}
+
+#index_add_button
+{
+	margin-left: 230px;
+}
+
+div.event_location, div.event_state
+{
+	display: inline-block;
+}
+
+#add_event_container
+{
+	width: 400px;
+}
+
+#show_event_table
+{
+	margin-left: 40px;
+}
+
+th, td
+{
+	margin-right: 20px;
+	padding: 0px 10px;
+	/*width: 200px;*/
+	border: 1px solid black;
+}
+
+#show_event_info_container, #show_event_comments_container
+{
+	display: inline-block;
+	vertical-align: top;
+	width: 430px;
+}
+
+#show_event_info_list li
+{
+	list-style-type: none;
+}
+
+#show_event_comments_container h2
+{
+	margin-top: 80px;
+}
+
+#show_comments
+{
+	border: 2px solid black;
+	height: 200px;
+	padding-left: 10px;
+	overflow: scroll;
+}
+
+#show_comments p
+{
+	border-bottom: 2px dotted black;
+	padding-bottom: 5px;
+	width: 360px;
+}
+
+#show_comment_button
+{
+	margin-left: 280px;
+}
+
+#update_event_button
+{
+	margin-left: 220px;
+}

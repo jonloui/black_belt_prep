@@ -1,0 +1,71 @@
+// Place all the styles related to the Users controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+body
+{
+	margin: auto;
+	padding: 0px;
+	width: 1000px;
+}
+
+#register, #login
+{
+	display: inline-block;
+	padding: 0px 0px 10px 10px;
+	vertical-align: top;
+	width: 400px;
+	border: 2px solid black;
+}
+
+#register h2, #login h2
+{
+	background-color: white;
+	bottom: 27px;
+	padding-left: 5px;
+	position: relative;
+	width: 100px;
+}
+
+#login h2
+{
+	width: 70px;
+}
+
+div.user_location, div.user_state
+{
+	display: inline-block;
+}
+
+.errors
+{
+	color: red;
+}
+
+label.optional
+{
+	display: inline-block;
+	margin-bottom: 10px;
+	width: 130px;
+}
+
+.btn
+{
+	background-color: green;
+	border: 5px groove blue;
+	border-radius: 15px;
+	color: white;
+	cursor: pointer;
+	margin-left: 200px;
+	margin-top: 10px;
+}
+
+#user_update_button, #event_update_button
+{
+	margin-left: 100px;
+}
+
+#edit form
+{
+	width: 400px;
+}
